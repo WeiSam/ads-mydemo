@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages="io.batcloud")
 @Configuration
 @EnableConfigurationProperties({DemoConfig.class})
+@EnableAspectJAutoProxy(exposeProxy = true)
 public class Application {
 	
 	@Value("${spring.profiles.active}")

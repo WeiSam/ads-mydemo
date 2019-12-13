@@ -5,8 +5,11 @@ import io.batcloud.disruptor.producer.UserDisruptor;
 import io.batcloud.disruptor.producer.UserProducer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.aop.config.AopConfigUtils;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,5 +28,10 @@ public class DisruptorTest {
     @Test
     public void testFun3() {
         userDisruptor.sendData(new UserEvent().setUserDto(new UserEvent.UserDto().setName("sam").setAge(18)));
+    }
+
+    @Test
+    public void testCJB(){
+
     }
 }
