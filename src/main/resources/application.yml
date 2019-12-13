@@ -1,0 +1,40 @@
+server:
+  port: 3000
+spring:
+  application:
+    name: ads-goods-service
+  profiles:
+    active: '@environment@'
+  http:
+    multipart:
+      max-file-size: 32MB
+      max-request-size: 32MB
+  datasource:
+    druid:
+      stat-view-servlet:
+        loginUsername: admin
+        loginPassword: 123456
+
+mybatis:
+  mapper-locations: 
+  - classpath*:mapper/**/*.xml  
+mapper:
+  not-empty: false
+  identity: MYSQL     
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+task:
+  pool:
+    size: 3
+
+uploadFileService:
+  appkey: 3f96870119418380ea3eb22dc34bf1f9  # 上传文件用的appkey
+
+sam:
+  myjson:
+    name: 前缀前缀

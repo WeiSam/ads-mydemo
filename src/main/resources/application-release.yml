@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    ads-good-library:
+      username: adsgoodss_rw
+      password: y33%56bR@KR5_7*_T#k$
+      driver-class-name: com.mysql.jdbc.Driver
+      url: "jdbc:mysql://ads-offerwall-master-db.hk.batmobi.cn:3306/ads_goods_library?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull"
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+task:
+  pool:
+    size: 2goods_library

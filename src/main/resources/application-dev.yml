@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    ads-good-library:
+      username: Zhizhen_java
+      password: Zhizhen_2015
+      driver-class-name: com.mysql.jdbc.Driver
+      url: "jdbc:mysql://192.168.0.56:3306/ads_goods_library?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull"
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+task:
+  pool:
+    size: 2
+
+config:
+  age: ${random.int}
+
+purchase:
+  delay:
+    millisecond: 259200000
+  milliseconds:
+    - 259200000
+    - 259200000
+    - 259200000
+

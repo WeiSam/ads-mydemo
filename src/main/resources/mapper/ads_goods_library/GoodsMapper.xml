@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.batcloud.mapper.adsGoodsLibrary.GoodsMapper">
+  <resultMap id="BaseResultMap" type="io.batcloud.model.goods.Goods">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="store_type_id" jdbcType="INTEGER" property="storeTypeId" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="store_goods_id" jdbcType="INTEGER" property="storeGoodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="trick_url" jdbcType="VARCHAR" property="trickUrl" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="desc" jdbcType="LONGVARCHAR" property="desc" />
+    <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+
+  <!--商品信息-->
+  <resultMap type="io.batcloud.model.goods.Goods" id="GoodsLangMaterialMap" extends="BaseResultMap">
+
+    <!--多语言素材列表-->
+    <collection property="langs" ofType="io.batcloud.model.goods.GoodsLang">
+      <id column="lan_id" jdbcType="INTEGER" property="id" />
+      <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+      <result column="lan_status" jdbcType="INTEGER" property="status" />
+      <result column="lan" jdbcType="VARCHAR" property="lan" />
+      <result column="lan_create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="lan_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="lan_title" jdbcType="VARCHAR" property="title" />
+        <result column="lan_introduction" jdbcType="LONGVARCHAR" property="introduction" />
+      <result column="lan_description" jdbcType="LONGVARCHAR" property="description" />
+    </collection>
+
+    <!--素材列表-->
+    <collection property="materials" ofType="io.batcloud.model.goods.GoodsMaterial">
+      <id column="material_id" jdbcType="INTEGER" property="id" />
+      <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+      <result column="material_status" jdbcType="INTEGER" property="status" />
+      <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+      <result column="material_create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="material_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </collection>
+
+  </resultMap>
+
+  <select id="queryGoodsList" resultMap="GoodsLangMaterialMap">
+
+    SELECT
+    tg.*, tgl.id AS lan_id,
+    tgl.title AS lan_title,
+    tgl.description AS lan_description,
+    tgl.create_time AS lan_create_time,
+    tgl.introduction AS lan_introduction,
+    tgl.`status` AS lan_status,
+    tgl.update_time AS lan_update_time,
+    tgm.id AS material_id,
+    tgm.create_time AS material_create_time,
+    tgm.`status` AS material_status,
+    tgm.update_time AS material_update_time,
+    tgl.lan,
+    tgm.icon_url,
+    tgl.goods_id
+    FROM
+    t_goods tg
+    LEFT JOIN t_goods_lang tgl ON tg.id = tgl.goods_id AND tgl. STATUS = 1
+    LEFT JOIN t_goods_material tgm ON tg.id = tgm.goods_id AND tgm. STATUS = 1
+    <where>
+      tg.`status` = 1
+    </where>
+
+  </select>
+</mapper>

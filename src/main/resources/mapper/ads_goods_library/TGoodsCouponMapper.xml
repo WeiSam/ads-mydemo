@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.batcloud.mapper.adsGoodsLibrary.TGoodsCouponMapper">
+  <resultMap id="BaseResultMap" type="io.batcloud.model.goods.TGoodsCoupon">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="coupon_platform" jdbcType="INTEGER" property="couponPlatform" />
+    <result column="coupon_type" jdbcType="INTEGER" property="couponType" />
+    <result column="coupon_code" jdbcType="VARCHAR" property="couponCode" />
+    <result column="coupon_url" jdbcType="VARCHAR" property="couponUrl" />
+    <result column="divide_ratio" jdbcType="DOUBLE" property="divideRatio" />
+    <result column="business_type" jdbcType="INTEGER" property="businessType" />
+    <result column="business_id" jdbcType="INTEGER" property="businessId" />
+    <result column="business_platform" jdbcType="VARCHAR" property="businessPlatform" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="values" jdbcType="VARCHAR" property="values" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="lock_amount" jdbcType="INTEGER" property="lockAmount" />
+    <result column="history_amount" jdbcType="INTEGER" property="historyAmount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="TGoodsCouponMapper" type="io.batcloud.model.goods.TGoodsCoupon" extends="BaseResultMap">
+    <association property="goodsCouponType"
+                 resultMap="io.batcloud.mapper.adsGoodsLibrary.TGoodsCouponTypeMapper.BaseResultMap"
+                 javaType="io.batcloud.model.goods.TGoodsCouponType"
+                 columnPrefix="ty.">
+    </association>
+    <collection property="materialList"
+                resultMap="io.batcloud.mapper.adsGoodsLibrary.TGoodsCouponMaterialMapper.BaseResultMap"
+                ofType="io.batcloud.model.goods.TGoodsCouponMaterial"
+                columnPrefix="material." >
+    </collection>
+  </resultMap>
+
+  <select id="queryCouponList" resultType="io.batcloud.model.goods.TGoodsCoupon" resultMap="TGoodsCouponMapper">
+      SELECT
+        coupon.id,
+        coupon.coupon_name,
+        coupon.coupon_platform,
+        coupon.coupon_code,
+        coupon.coupon_url,
+        coupon.coupon_type,
+        coupon.divide_ratio,
+        coupon.business_type,
+        coupon.business_id,
+        coupon.business_platform,
+        coupon.values,
+        coupon.start_time,
+        coupon.end_time,
+        coupon.amount,
+        coupon.lock_amount,
+        coupon.history_amount,
+        material.material_url AS 'material.material_url',
+        material.sort AS 'material.sort',
+        ty.coupon_type AS 'ty.coupon_type'
+      FROM
+        t_goods_coupon coupon,
+        t_goods_coupon_material material,
+        t_goods_coupon_type ty
+      WHERE
+          material.goods_coupon_id = coupon.id
+          AND coupon.coupon_type = ty.id
+          AND material.status = 1
+          AND coupon.status = 1
+          AND coupon.end_time >= NOW()
+  </select>
+
+
+</mapper>
